@@ -1,0 +1,3 @@
+/home/crisptofer-pc/Documents/Proyecto_2/Proyecto_2/Server/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/crisptofer-pc/Documents/Proyecto_2/Proyecto_2/Server/cmake-build-debug/CMakeFiles/Server.dir
+/home/crisptofer-pc/Documents/Proyecto_2/Proyecto_2/Server/cmake-build-debug/CMakeFiles/edit_cache.dir

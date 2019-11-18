@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/crisptofer-pc/Documents/Proyecto_2/Proyecto_2/Server/main.c
+stdio.h
+-
+unistd.h
+-
+stdlib.h
+-
+string.h
+-
+sys/types.h
+-
+sys/socket.h
+-
+arpa/inet.h
+-
+sys/ioctl.h
+-
+netinet/in.h
+-
+sys/select.h
+-
+fcntl.h
+-
+errno.h
+-
+
