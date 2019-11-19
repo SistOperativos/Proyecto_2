@@ -66,6 +66,19 @@ void request_response(int fd, int msg){
     }
 }
 
+void driver_com(char* msg)
+{
+    FILE *file;
+    file = fopen("/dev/ttyACM0","w");  //Opening device file
+    int i = 0;
+    // for(i = 0 ; i < 3 ; i++)
+    // {
+    fprintf(file,"%s\n",msg); //Writing to the file
+    sleep(1);
+    //}
+    fclose(file);
+}
+
 int connection(int fd)
 {
     char request[500], resource[500], *ptr;
@@ -237,98 +250,14 @@ int connection(int fd)
                 value = "9c";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
+
             }else{
+                value = "0";
                 request_response(fd, 1);
                 printf("Internal error");
             }
+            driver_com(value);
             close(fd);
-            shutdown(fd, SHUT_RDWR);
-
-        }
-
-        if(strncmp(request, "POST /categorize", 16) == 0)
-
-        if (ptr == NULL)
-        {
-            //receive_image(fd,2);
-        }
-        else
-        {
-            /*
-            if (ptr[strlen(ptr) - 1] == '/')
-            {
-                strcat(ptr, "index.html");
-            }
-            strcpy(resource, webroot());
-            strcat(resource, ptr);
-            char *s = strchr(ptr, '.');
-            int i;
-            for (i = 0; extensions[i].ext != NULL; i++)
-            {
-                if (strcmp(s + 1, extensions[i].ext) == 0)
-                {
-                    fd1 = open(resource, O_RDONLY, 0);
-                    printf("Opening \"%s\"\n", resource);
-                    if (fd1 == -1)
-                    {
-                        printf("404 File not found Error\n");
-                        send_new(fd, "HTTP/1.1 404 Not Found\r\n");
-                        send_new(fd, "Server : Web Server in C\r\n\r\n");
-                        send_new(fd, "<html><head><title>404 Not Found</head></title>");
-                        send_new(fd, "<body><p>404 Not Found: The requested resource could not be found!</p></body></html>");
-                        //Handling php requests
-                    }
-                    else if (strcmp(extensions[i].ext, "php") == 0)
-                    {
-                        php_cgi(resource, fd);
-                        sleep(1);
-                        close(fd);
-                        exit(1);
-                    }
-                    else
-                    {
-                        printf("200 OK, Content-Type: %s\n\n",
-                               extensions[i].mediatype);
-                        send_new(fd, "HTTP/1.1 200 OK\r\n");
-                        send_new(fd, "Server : Web Server in C\r\n\r\n");
-                        if (ptr == request + 4) // if it is a GET request
-                        {
-                            if ((length = get_file_size(fd1)) == -1)
-                                printf("Error in getting size !\n");
-                            size_t total_bytes_sent = 0;
-                            ssize_t bytes_sent;
-                            while (total_bytes_sent < length)
-                            {
-                                //Zero copy optimization
-                                if ((bytes_sent = sendfile(fd, fd1, 0,
-                                                           length - total_bytes_sent)) <= 0)
-                                {
-                                    if (errno == EINTR || errno == EAGAIN)
-                                    {
-                                        continue;
-                                    }
-                                    perror("sendfile");
-                                    return -1;
-                                }
-                                total_bytes_sent += bytes_sent;
-                            }
-                        }
-                    }
-                    break;
-                }
-                int size = sizeof(extensions) / sizeof(extensions[0]);
-                if (i == size - 2)
-                {
-                    printf("415 Unsupported Media Type\n");
-                    send_new(fd, "HTTP/1.1 415 Unsupported Media Type\r\n");
-                    send_new(fd, "Server : Web Server in C\r\n\r\n");
-                    send_new(fd, "<html><head><title>415 Unsupported Media Type</head></title>");
-                    send_new(fd, "<body><p>415 Unsupported Media Type!</p></body></html>");
-                }
-            }
-            printf(&fd1);
-            close(fd);
-             */
         }
     }
     shutdown(fd, SHUT_RDWR);
@@ -338,17 +267,15 @@ int main(int argc, char *argv[]) {
     int sockfd, newsockfd, portno, pid;
     socklen_t clilen;
     struct sockaddr_in serv_addr, cli_addr;
-    /*
     if (argc < 2) {
         fprintf(stderr, "ERROR, no port provided\n");
         exit(1);
     }
-     */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0)
         error("ERROR opening socket");
     bzero((char *) &serv_addr, sizeof(serv_addr));
-    portno = 9011;    //atoi(argv[1]);
+    portno = atoi(argv[1]);
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = INADDR_ANY;
     serv_addr.sin_port = htons(portno);
