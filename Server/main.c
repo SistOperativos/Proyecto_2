@@ -258,6 +258,8 @@ int connection(int fd)
             }
             driver_com(value);
             close(fd);
+        }else{
+            request_response(fd, 1);
         }
     }
     shutdown(fd, SHUT_RDWR);
