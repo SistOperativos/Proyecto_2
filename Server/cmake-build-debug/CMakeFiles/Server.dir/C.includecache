@@ -15,20 +15,8 @@ stdlib.h
 -
 string.h
 -
-sys/types.h
--
 sys/socket.h
 -
-arpa/inet.h
--
-sys/ioctl.h
--
 netinet/in.h
--
-sys/select.h
--
-fcntl.h
--
-errno.h
 -
 

@@ -46,6 +46,25 @@ int recv_new(int fd, char *buffer)
     }
     return (0);
 }
+void request_response(int fd, int msg){
+    switch(msg){
+        case 0:
+            printf("200 OK, Content-Type: text\n");
+            send_new(fd, "HTTP/1.1 200 OK\r\n");
+            send_new(fd, "Server : Web Server in C\r\n\r\n");
+            break;
+        case 1:
+            printf("400 Bad Request, Content-Type: text\n");
+            send_new(fd, "HTTP/1.1 400 Bad Request Error\r\n");
+            send_new(fd, "Server : Web Server in C\r\n\r\n");
+            break;
+        default:
+            printf("400 Bad Request, Content-Type: text\n");
+            send_new(fd, "HTTP/1.1 400 Bad Request Error\r\n");
+            send_new(fd, "Server : Web Server in C\r\n\r\n");
+            break;
+    }
+}
 
 int connection(int fd)
 {
@@ -78,10 +97,152 @@ int connection(int fd)
         }
         if(strncmp(request, "POST /api/move", 14) == 0)
         {
-            printf("200 OK, Content-Type: text\n");
-            send_new(fd, "HTTP/1.1 200 OK\r\n");
-            send_new(fd, "Server : Web Server in C\r\n\r\n");
             //receive_image(fd,1);
+            char string[2048];
+            printf("\n \n");
+            read(fd, string, 512);
+            printf("%s", string);
+            char* value;
+            if(strstr(string, "value=1a") != NULL){
+                value = "1a";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if (strstr(string, "value=1b") != NULL){
+                value = "1b";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if (strstr(string, "value=1c") != NULL){
+                value = "1c";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if (strstr(string, "value=2a") != NULL){
+                value = "2a";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if (strstr(string, "value=2b") != NULL){
+                value = "2b";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if (strstr(string, "value=2c") != NULL){
+                value = "2c";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=3a")!= NULL){
+                value = "3a";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=3b")!= NULL){
+                value = "3b";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=3c")!= NULL){
+                value = "3c";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=4a")!= NULL){
+                value = "4a";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=4b")!= NULL){
+                value = "4b";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=4c")!= NULL){
+                value = "4c";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=5a")!= NULL){
+                value = "5a";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=5b")!= NULL){
+                value = "5b";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=5c")!= NULL){
+                value = "5c";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=6a")!= NULL){
+                value = "6a";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=6b")!= NULL){
+                value = "6b";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=6c")!= NULL){
+                value = "6c";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=7a")!= NULL){
+                value = "7a";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=7b")!= NULL){
+                value = "7b";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=7c")!= NULL){
+                value = "7c";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=8a")!= NULL){
+                value = "8a";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=8b")!= NULL){
+                value = "8b";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=8c")!= NULL){
+                value = "8c";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=9a")!= NULL){
+                value = "9a";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=9b")!= NULL){
+                value = "9b";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }
+            else if(strstr(string, "value=9c")!= NULL){
+                value = "9c";
+                request_response(fd, 0);
+                printf("\n %s \n", value);
+            }else{
+                request_response(fd, 1);
+                printf("Internal error");
+            }
+            close(fd);
+            shutdown(fd, SHUT_RDWR);
 
         }
 
@@ -187,7 +348,7 @@ int main(int argc, char *argv[]) {
     if (sockfd < 0)
         error("ERROR opening socket");
     bzero((char *) &serv_addr, sizeof(serv_addr));
-    portno = 9000;    //atoi(argv[1]);
+    portno = 9011;    //atoi(argv[1]);
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = INADDR_ANY;
     serv_addr.sin_port = htons(portno);
