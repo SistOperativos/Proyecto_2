@@ -2,14 +2,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
 #include <sys/socket.h>
-#include <arpa/inet.h>
-#include <sys/ioctl.h>
 #include <netinet/in.h>
-#include <sys/select.h>
-#include <fcntl.h>
-#include <errno.h>
 
 #define EOL "\r\n"
 #define EOL_SIZE 2
@@ -53,41 +47,8 @@ int recv_new(int fd, char *buffer)
     return (0);
 }
 
-char *webroot()
-{
-    // open the file "conf" for reading
-    FILE *in = fopen("conf", "rt");
-    // read the first line from the file
-    char buff[1000];
-    fgets(buff, 1000, in);
-    // close the stream
-    fclose(in);
-    char *nl_ptr = strrchr(buff, '\n');
-    if (nl_ptr != NULL)
-        *nl_ptr = '\0';
-    return strdup(buff);
-}
-
-void php_cgi(char *script_path, int fd)
-{
-    send_new(fd, "HTTP/1.1 200 OK\n Server: Web Server in C\n Connection: close\n");
-    dup2(fd, STDOUT_FILENO);
-    char script[500];
-    strcpy(script, "SCRIPT_FILENAME=");
-    strcat(script, script_path);
-    putenv("GATEWAY_INTERFACE=CGI/1.1");
-    putenv(script);
-    putenv("QUERY_STRING=");
-    putenv("REQUEST_METHOD=GET");
-    putenv("REDIRECT_STATUS=true");
-    putenv("SERVER_PROTOCOL=HTTP/1.1");
-    putenv("REMOTE_HOST=127.0.0.1");
-    execl("/usr/bin/php-cgi", "php-cgi", NULL);
-}
-
 int connection(int fd)
 {
-    printf("Entró acá la hueva");
     char request[500], resource[500], *ptr;
     int fd1, length;
     if (recv_new(fd, request) == 0)
@@ -97,6 +58,7 @@ int connection(int fd)
     printf("%s\n", request);
     // Check for a valid browser request
     ptr = strstr(request, " HTTP/");
+    printf("%s", ptr);
     if (ptr == NULL)
     {
         printf("NOT HTTP !\n");
@@ -108,14 +70,19 @@ int connection(int fd)
 
         if (strncmp(request, "GET ", 4) == 0)
         {
-            printf("200 OK, Content-Type: text");
+            printf("200 OK, Content-Type: json");
             send_new(fd, "HTTP/1.1 200 OK\r\n");
             send_new(fd, "Server : Web Server in C\r\n\r\n");
+            send_new(fd, "{\"tag\": \"u\"}");
             ptr = request + 4;
         }
-        if(strncmp(request, "POST /equalize", 14) == 0)
+        if(strncmp(request, "POST /api/move", 14) == 0)
         {
+            printf("200 OK, Content-Type: text\n");
+            send_new(fd, "HTTP/1.1 200 OK\r\n");
+            send_new(fd, "Server : Web Server in C\r\n\r\n");
             //receive_image(fd,1);
+
         }
 
         if(strncmp(request, "POST /categorize", 16) == 0)
