@@ -1,0 +1,12 @@
+
+    # sudo mknod /dev/driver-mem c 60 0
+    # sudo chmod 666 /dev/driver-mem
+    # make -C /usr/src/linux-headers-$(uname -r) M=$(pwd modules)
+    # sudo insmod mydriver.ko
+    # echo -n H >/dev/memory
+    # cat/dev/memory
+
+
+
+    # sudo rmmod mydriver
+    # sudo lsmod
