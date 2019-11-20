@@ -354,11 +354,11 @@ export default class Game extends React.Component {
                 }
             }
             msg = "value:"+pos+ico;
-            Alert.alert(msg)
+            //Alert.alert(msg)
         
             let formdata = new FormData();
             formdata.append(value, msg)
-            fetch('http://192.168.100.156:9016/api/move', {
+            fetch('http://192.168.100.5:9016/api/move', {
                 method: 'POST',
                 headers : {
                     Accept: '/',
