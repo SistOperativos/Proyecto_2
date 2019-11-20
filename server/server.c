@@ -123,137 +123,137 @@ int connection(int fd)
             printf("%s", string);
             char* value;
             if(strstr(string, "value:1a") != NULL){
-                value = "1a";
+                value = "1";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if (strstr(string, "value=1b") != NULL){
-                value = "1b";
+            else if (strstr(string, "value:1b") != NULL){
+                value = "1";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if (strstr(string, "value=1c") != NULL){
-                value = "1c";
+            else if (strstr(string, "value:1c") != NULL){
+                value = "1";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if (strstr(string, "value=2a") != NULL){
-                value = "2a";
+            else if (strstr(string, "value:2a") != NULL){
+                value = "2";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if (strstr(string, "value=2b") != NULL){
-                value = "2b";
+            else if (strstr(string, "value:2b") != NULL){
+                value = "2";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if (strstr(string, "value=2c") != NULL){
-                value = "2c";
+            else if (strstr(string, "value:2c") != NULL){
+                value = "2";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=3a")!= NULL){
-                value = "3a";
+            else if(strstr(string, "value:3a")!= NULL){
+                value = "3";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=3b")!= NULL){
-                value = "3b";
+            else if(strstr(string, "value:3b")!= NULL){
+                value = "3";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=3c")!= NULL){
-                value = "3c";
+            else if(strstr(string, "value:3c")!= NULL){
+                value = "3";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=4a")!= NULL){
-                value = "4a";
+            else if(strstr(string, "value:4a")!= NULL){
+                value = "4";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=4b")!= NULL){
-                value = "4b";
+            else if(strstr(string, "value:4b")!= NULL){
+                value = "4";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=4c")!= NULL){
-                value = "4c";
+            else if(strstr(string, "value:4c")!= NULL){
+                value = "4";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=5a")!= NULL){
-                value = "5a";
+            else if(strstr(string, "value:5a")!= NULL){
+                value = "5";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=5b")!= NULL){
-                value = "5b";
+            else if(strstr(string, "value:5b")!= NULL){
+                value = "5";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=5c")!= NULL){
-                value = "5c";
+            else if(strstr(string, "value:5c")!= NULL){
+                value = "5";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=6a")!= NULL){
-                value = "6a";
+            else if(strstr(string, "value:6a")!= NULL){
+                value = "6";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=6b")!= NULL){
-                value = "6b";
+            else if(strstr(string, "value:6b")!= NULL){
+                value = "6";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=6c")!= NULL){
-                value = "6c";
+            else if(strstr(string, "value:6c")!= NULL){
+                value = "6";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=7a")!= NULL){
-                value = "7a";
+            else if(strstr(string, "value:7a")!= NULL){
+                value = "7";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=7b")!= NULL){
-                value = "7b";
+            else if(strstr(string, "value:7b")!= NULL){
+                value = "7";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=7c")!= NULL){
-                value = "7c";
+            else if(strstr(string, "value:7c")!= NULL){
+                value = "7";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=8a")!= NULL){
-                value = "8a";
+            else if(strstr(string, "value:8a")!= NULL){
+                value = "8";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=8b")!= NULL){
-                value = "8b";
+            else if(strstr(string, "value:8b")!= NULL){
+                value = "8";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=8c")!= NULL){
-                value = "8c";
+            else if(strstr(string, "value:8c")!= NULL){
+                value = "8";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=9a")!= NULL){
-                value = "9a";
+            else if(strstr(string, "value:9a")!= NULL){
+                value = "9";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=9b")!= NULL){
-                value = "9b";
+            else if(strstr(string, "value:9b")!= NULL){
+                value = "9";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
             }
-            else if(strstr(string, "value=9c")!= NULL){
-                value = "9c";
+            else if(strstr(string, "value:9c")!= NULL){
+                value = "9";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
 
