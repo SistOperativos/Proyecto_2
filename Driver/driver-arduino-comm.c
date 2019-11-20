@@ -1,18 +1,31 @@
+/******************************************************************************/
+/* Instituto Tecnológico de Costa Rica                                          */
+/* Área Académica de Ingeniería en Computadores                                 */
+/* Principios de Sistemas Operativos                                            */
+/* Prof. Jason Leitón                                                           */
+/*                                                                              */
+/* DRIVER                                                                       */
+/* Basado en: Tutorial 9 Profesor Jefersson Gonzales y                          */
+/*            del foro sitio: https://forum.arduino.cc/index.php?topic=348538.0 */
+/******************************************************************************/
+
 
 #include <linux/module.h>
 #include <linux/fs.h>
 #include <linux/cdev.h>
 #include <linux/device.h>
-//#include <asm/uaccess.h>
-#include <linux/uaccess.h> /* copy_from/to_user */
-/* ============== krn space '/dev/ttyN' access ============= */
+#include <linux/uaccess.h> 
 
-static struct file *ktty_open(const char *filename, int flags, umode_t mode)
+
+/******************************************************************************/
+/******************************* TTY Arduino **********************************/
+
+static struct file *arduinotty_open(const char *filename, int flags, umode_t mode)
 {
     return filp_open(filename, O_RDWR | O_NOCTTY, 0);
 }
 
-static ssize_t ktty_write(struct file *f, const char *buf, int count)
+static ssize_t arduinotty_write(struct file *f, const char *buf, int count)
 {
 
     int result;
@@ -27,7 +40,7 @@ static ssize_t ktty_write(struct file *f, const char *buf, int count)
     return result;
 }
 
-static ssize_t ktty_read(struct file * f, char * buf, int count)
+static ssize_t arduinotty_read(struct file * f, char * buf, int count)
 {
 	int result = 0;
 	mm_segment_t oldfs;
@@ -38,77 +51,76 @@ static ssize_t ktty_read(struct file * f, char * buf, int count)
 	return result;
 }
 
-static void ktty_close(struct file *xktty, fl_owner_t id)
+static void arduinotty_close(struct file *ardtty, fl_owner_t id)
 {
-        filp_close(xktty, id);
+        filp_close(ardtty, id);
 }
 
-/* =============== module file operations ===================== */
-DEFINE_MUTEX(xmutex);
-static struct file *xktty = NULL;
-static int xktty_open(struct inode *inode, struct file *filp)
+/******************************************************************************/
+/******************************* DRIVER OPS ***********************************/
+
+DEFINE_MUTEX(drivermutex);
+static struct file *ttyfile = NULL;
+static int mydriver_open(struct inode *inode, struct file *filp)
 {
     printk("<1>Open function of myarmdriver");
-    #define XKTTY_MAX_PATH 20
-    #define XKTTY_NUM 0
-    char filename[XKTTY_MAX_PATH];
+    char filename[20];
 
     /* only one process at a time */
-    if(!(mutex_trylock(&xmutex)))
+    if(!(mutex_trylock(&drivermutex)))
         return -EBUSY;
 
-    snprintf(filename, XKTTY_MAX_PATH, "/dev/ttyACM%d", XKTTY_NUM);
-    xktty = ktty_open(filename, 0, O_RDWR);
-    if (PTR_RET(xktty)) {
-        mutex_unlock(&xmutex);
-        return PTR_RET(xktty);
+    snprintf(filename, 20, "/dev/ttyACM%d", 0);
+    ttyfile = arduinotty_open(filename, 0, O_RDWR);
+    if (PTR_RET(ttyfile)) {
+        mutex_unlock(&drivermutex);
+        return PTR_RET(ttyfile);
     }
 
     return 0;
 }
 
-static int xktty_release(struct inode *inode, struct file *file)
+static int mydriver_release(struct inode *inode, struct file *file)
 {
     printk("<1>Realease function of myarmdriver");
-    if(!IS_ERR_OR_NULL(xktty))
-        ktty_close(xktty, 0);
-    mutex_unlock(&xmutex);
+    if(!IS_ERR_OR_NULL(ttyfile))
+        arduinotty_close(ttyfile, 0);
+    mutex_unlock(&drivermutex);
     return 0;
 }
 
-static ssize_t xktty_write(struct file *filp,
+static ssize_t mydriver_write(struct file *filp,
                  const char __user * buf, size_t count,
                  loff_t * f_pos)
 {
     printk("<1>Write function of myarmdriver");
 
-    #define XKTTY_MAX_BUF_LEN 200
-    const char kbuf[XKTTY_MAX_BUF_LEN];
+    const char kbuf[200];
 
-    count = count < XKTTY_MAX_BUF_LEN ? count : XKTTY_MAX_BUF_LEN;
+    count = count < 200 ? count : 200;
     if (copy_from_user((char *)kbuf, (const char __user *)buf, count))
         return -EFAULT;
         
-    if (!IS_ERR_OR_NULL(xktty))
+    if (!IS_ERR_OR_NULL(ttyfile))
         {printk(">>>>>>>>>> WRITTING %s\n\n",kbuf);
-        return ktty_write(xktty, kbuf, count);}
+        return arduinotty_write(ttyfile, kbuf, count);}
     else
        { printk(">>>>>>> ERROR WRITTING\n");
         return -EFAULT;}
 }
 
-static ssize_t xktty_read(struct file * flip, char __user * buf, size_t count,
+static ssize_t mydriver_read(struct file * flip, char __user * buf, size_t count,
 		loff_t * f_pos)
 {
     printk("<1>Read function of myarmdriver");
-	char kbuf[XKTTY_MAX_BUF_LEN] = { '\0' };
+	char kbuf[200] = { '\0' };
 	int result = 0;
-	count = count < XKTTY_MAX_BUF_LEN ? count : XKTTY_MAX_BUF_LEN;
+	count = count < 200 ? count : 200;
 
-	if (!IS_ERR_OR_NULL(xktty))
+	if (!IS_ERR_OR_NULL(ttyfile))
 	{
 		printk(KERN_INFO "Tying to read...Count: %d\n", count);
-		result = ktty_read(xktty, kbuf, count);
+		result = arduinotty_read(ttyfile, kbuf, count);
 		printk("Buf: %s\nResult: %d\n", kbuf, result);
 
 		if (copy_to_user((char *)buf, (char __user *)kbuf, result))
@@ -125,66 +137,62 @@ static ssize_t xktty_read(struct file * flip, char __user * buf, size_t count,
 	return result;
 }
 
-static struct file_operations xktty_ops = {
+static struct file_operations mydriver_ops = {
     .owner = THIS_MODULE,
-    .open = xktty_open,
-    .release = xktty_release,
-    .write = xktty_write,
-	.read = xktty_read
+    .open = mydriver_open,
+    .release = mydriver_release,
+    .write = mydriver_write,
+	.read = mydriver_read
 };
-
-/* =================== init/exit ======================== */
 
 static struct cdev cdev;
 static struct class *class;
-static int xktty_mjr;
+static int major_number;
 
-static int xktty_init(void)
+static int mydriver_init(void)
 {
     printk("<1>Init function of myarmdriver");
-    #define XKTTY_NAME "myarmdriver"
 
     dev_t devt = MKDEV(0, 0);
-    if (alloc_chrdev_region(&devt, 0, 1, XKTTY_NAME) < 0)
+    if (alloc_chrdev_region(&devt, 0, 1, "myarmdriver") < 0)
         return -1;
-    xktty_mjr = MAJOR(devt);
+    major_number = MAJOR(devt);
 
-    cdev_init(&cdev, &xktty_ops);
+    cdev_init(&cdev, &mydriver_ops);
     cdev.owner = THIS_MODULE;
-    devt = MKDEV(xktty_mjr, 0);
+    devt = MKDEV(major_number, 0);
     if (cdev_add(&cdev, devt, 1))
         goto exit0;
 
-    class = class_create(THIS_MODULE, XKTTY_NAME);
+    class = class_create(THIS_MODULE, "myarmdriver");
     if (!class)
         goto exit1;
 
-    devt = MKDEV(xktty_mjr, 0);
-    if (!(device_create(class, NULL, devt, NULL, XKTTY_NAME)))
+    devt = MKDEV(major_number, 0);
+    if (!(device_create(class, NULL, devt, NULL, "myarmdriver")))
         goto exit2;
 
     return 0;
 
-exit2:
-    class_destroy(class);
-exit1:
-    cdev_del(&cdev);
-exit0:
-    unregister_chrdev_region(MKDEV(xktty_mjr, 0), 1);
+    exit2:
+        class_destroy(class);
+    exit1:
+        cdev_del(&cdev);
+    exit0:
+        unregister_chrdev_region(MKDEV(major_number, 0), 1);
 
     return -1;
 }
 
-static void xktty_fini(void)
+static void mydriver_exit(void)
 {
     printk("<1>Exit function of myarmdriver");
-    device_destroy(class, MKDEV(xktty_mjr, 0));
+    device_destroy(class, MKDEV(major_number, 0));
     class_destroy(class);
     cdev_del(&cdev);
-    unregister_chrdev_region(MKDEV(xktty_mjr, 0), 1);
+    unregister_chrdev_region(MKDEV(major_number, 0), 1);
 }
 
-module_init(xktty_init);
-module_exit(xktty_fini);
+module_init(mydriver_init);
+module_exit(mydriver_exit);
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("__ParaPik__");

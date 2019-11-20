@@ -1,6 +1,6 @@
 
-    # sudo mknod /dev/driver-mem c 0 0
-    # sudo chmod 666 /dev/driver-mem
+    # sudo mknod /dev/myarmdriver c 0 0
+    # sudo chmod 666 /dev/myarmdriver
     # make -C /usr/src/linux-headers-$(uname -r) M=$(pwd modules)
     # sudo insmod mydriver.ko
     # echo -n H >/dev/driver-mem

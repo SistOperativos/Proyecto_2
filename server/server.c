@@ -10,6 +10,7 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include "../Library/src/driverlib.c"
 
 #define EOL "\r\n"
 #define EOL_SIZE 2
@@ -72,20 +73,8 @@ void request_response(int fd, int msg){
     }
 }
 
-void driver_com(char* msg)
-{
-    FILE *file;
-    file = fopen("/dev/ttyACM0","w");  //Opening device file
-    int i = 0;
-    // for(i = 0 ; i < 3 ; i++)
-    // {
-    fprintf(file,"%s\n",msg); //Writing to the file
-    sleep(1);
-    //}
-    fclose(file);
-}
 
-int connection(int fd)
+int connection(int fd, int fd_driver)
 {
     char request[500], resource[500], *ptr;
     int fd1, length;
@@ -121,157 +110,159 @@ int connection(int fd)
             printf("\n \n");
             read(fd, string, 512);
             printf("%s", string);
-            char* value;
+            int value;
             if(strstr(string, "value:1a") != NULL){
-                value = "1";
+                value = 1;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if (strstr(string, "value:1b") != NULL){
-                value = "1";
+                value = 1;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if (strstr(string, "value:1c") != NULL){
-                value = "1";
+                value = 1;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if (strstr(string, "value:2a") != NULL){
-                value = "2";
+                value = 2;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if (strstr(string, "value:2b") != NULL){
-                value = "2";
+                value = 2;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if (strstr(string, "value:2c") != NULL){
-                value = "2";
+                value = 2;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:3a")!= NULL){
-                value = "3";
+                value = 3;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:3b")!= NULL){
-                value = "3";
+                value = 3;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:3c")!= NULL){
-                value = "3";
+                value = 3;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:4a")!= NULL){
-                value = "4";
+                value = 4;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:4b")!= NULL){
-                value = "4";
+                value = 4;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:4c")!= NULL){
-                value = "4";
+                value = 4;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:5a")!= NULL){
-                value = "5";
+                value = 5;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:5b")!= NULL){
-                value = "5";
+                value = 5;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:5c")!= NULL){
-                value = "5";
+                value = 5;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:6a")!= NULL){
-                value = "6";
+                value = 6;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:6b")!= NULL){
-                value = "6";
+                value = 6;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:6c")!= NULL){
-                value = "6";
+                value = 6;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:7a")!= NULL){
-                value = "7";
+                value = 7;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:7b")!= NULL){
-                value = "7";
+                value = 7;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:7c")!= NULL){
-                value = "7";
+                value = 7;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:8a")!= NULL){
-                value = "8";
+                value = 8;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:8b")!= NULL){
-                value = "8";
+                value = 8;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:8c")!= NULL){
-                value = "8";
+                value = 8;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:9a")!= NULL){
-                value = "9";
+                value = 9;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:9b")!= NULL){
-                value = "9";
+                value = 9;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
             }
             else if(strstr(string, "value:9c")!= NULL){
-                value = "9";
+                value = 9;
                 request_response(fd, 0);
-                printf("\n %s \n", value);
+                printf("\n %d \n", value);
 
             }else{
-                value = "0";
+                value = 0;
                 request_response(fd, 1);
                 printf("Internal error");
             }
-            driver_com(value);
+            writePos(fd_driver,value);
             close(fd);
         }else{
             request_response(fd, 1);
         }
+
     }
     shutdown(fd, SHUT_RDWR);
 }
 
 int main(int argc, char *argv[]) {
+    int fd_driver = initDriver();
     int sockfd, newsockfd, portno, pid;
     socklen_t clilen;
     struct sockaddr_in serv_addr, cli_addr;
@@ -308,7 +299,7 @@ int main(int argc, char *argv[]) {
         if (pid == 0)
         {
             close(sockfd);
-            connection(newsockfd);
+            connection(newsockfd, fd_driver);
             exit(0);
         }
         else

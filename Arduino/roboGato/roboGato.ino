@@ -33,31 +33,31 @@ void loop() {
   msg = "";
   if(Serial.available()>0){
     msg = Serial.readString();
-    if(msg.substring(0) == "a"){
+    if(msg.substring(0) == "1"){
       drawTriangle(1);
     }
-    else if (msg.substring(0) == "b"){
+    else if (msg.substring(0) == "2"){
       drawTriangle(2);
     }
-    else if (msg.substring(0) == "c"){
+    else if (msg.substring(0) == "3"){
       drawTriangle(3);
     }
-    else if(msg.substring(0) == "d"){
+    else if(msg.substring(0) == "4"){
       drawTriangle(4);
     }
-    else if(msg.substring(0) == "e"){
+    else if(msg.substring(0) == "5"){
       drawTriangle(5);
     }
-    else if(msg.substring(0) == "f"){
+    else if(msg.substring(0) == "6"){
       drawTriangle(6);
     }
-    else if(msg.substring(0) == "g"){
+    else if(msg.substring(0) == "7"){
       drawTriangle(7);
     }
-    else if(msg.substring(0) == "h"){
+    else if(msg.substring(0) == "8"){
       drawTriangle(8);
     }
-    else if(msg.substring(0) == "i"){
+    else if(msg.substring(0) == "9"){
       drawTriangle(9);
     }
     
@@ -83,13 +83,13 @@ void loop() {
 void drawTriangle(int Place){
   if (Place == 1) {
     arm.gotoPoint(50,80,10);
-    delay(2000);
+    delay(100);
     arm.gotoPoint(40,120,10);
-    delay(2000);
+    delay(100);
     arm.gotoPoint(50,80,10);
-    delay(2000);
+    delay(100);
     arm.gotoPoint(50,80,10);
-    delay(2000);
+    delay(100);
     arm.gotoPoint(0,100,50);
   }
   else if (Place == 2){
