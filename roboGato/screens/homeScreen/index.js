@@ -42,14 +42,9 @@ export default class Home extends React.Component {
       gridItems: [
         {
           image: GameIcon,
-          tag: 'GameScreen',
+          tag: 'ConfigScreen',
           title: 'GameScreen'
         },
-        {
-          image: IconSettings,
-          tag: 'Settings',
-          title: 'Settings'
-        }
       ]
     };
   }
