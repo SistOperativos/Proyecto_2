@@ -1,4 +1,6 @@
-obj-m:= mydriver.o
+DRIVER=driver-arduino-comm
+
+obj-m:= $(DRIVER).o
 
 
 
@@ -9,6 +11,6 @@ clean:
 		rm -f *.symvers
 		rm -f *.order
 		rm -rf .tmp_versions
-		rm -rf .mydriver*
+		rm -rf .$(DRIVER)*
 		rm -rf .cache*
 		clear
