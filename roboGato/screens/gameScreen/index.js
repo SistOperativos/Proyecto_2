@@ -14,7 +14,7 @@ const audio_options = {
     source: { local: require('../../assets/Platformer2.mp3') }
 }
 
-export default class App extends React.Component {
+export default class Game extends React.Component {
     static navigationOptions = ({ navigation }) => ({
         header: true
     });
@@ -22,21 +22,27 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameState: [[1,0,0],
+            gameState: [[0,0,0],
                         [0,0,0],
                         [0,0,0]],
             currentPlayer: "Uno",
-            playerOneIcon: "close",
+            playerOneIcon: "",
+            playerTwoIcon:"",
         };
     }
     componentDidMount(){
         this.backhandler = BackHandler.addEventListener("hardwareBackPress", ()=>{
             this.props.navigation.navigate('Home');
         });
+        const { navigation } = this.props
+        this.setState({playerOneIcon: navigation.state.params.playerOneIcon, playerTwoIcon: navigation.state.params.playerTwoIcon})
+        
         this.initializeGame();
     }
     componentWillUnmount(){
         this.backhandler.remove();
+        const { navigation } = this.props
+        this.setState({ playerOneIcon: navigation.state.params.playerOneIcon, playerOneIcon: navigation.state.params.playerTwoIcon })
     }
 
     initializeGame = () => {
@@ -65,7 +71,7 @@ export default class App extends React.Component {
             if ((this.state.gameState[0][i] == "Uno") && (this.state.gameState[0][i] == this.state.gameState[1][i]) && (this.state.gameState[0][i] == this.state.gameState[2][i])) {
                 return "Uno";
             }
-            else if ((this.state.gameState[0][i] == "Dos") && (this.state.gameState[0][i] == this.state.gameState[0][i]) && (this.state.gameState[0][i] == this.state.gameState[2][i])) {
+            else if ((this.state.gameState[0][i] == "Dos") && (this.state.gameState[0][i] == this.state.gameState[1][i]) && (this.state.gameState[0][i] == this.state.gameState[2][i])) {
                 return "Dos";
             }
         }
@@ -98,20 +104,286 @@ export default class App extends React.Component {
                 Alert.alert("Congratulations player"+winner+"~!");
                 this.initializeGame();
             }
+            let num = row.toString()+col.toString();
+             pos = " "
+             ico = " "
+            
+            if(num=="00"){
+                if(this.state.currentPlayer == "Uno"){
+                    pos ="1";
+                    if (this.state.playerOneIcon == "alpha-l"){
+                        ico = "a"
+                    }
+                    else if (this.state.playerOneIcon == "checkbox-blank-circle"){
+                        ico = "b"
+                    }
+                    else {
+                        ico = "c"
+                    }
+                }
+                else {
+                    pos = 1;
+                    if (this.state.playerTwoIcon == "alpha-l") {
+                        ico = "a"
+                    }
+                    else if (this.state.playerTwoIcon == "checkbox-blank-circle") {
+                        ico = "b"
+                    }
+                    else {
+                        ico = "c"
+                    }
+                }
+            }
+            else if(num == "01") {
+                if (this.state.currentPlayer == "Uno") {
+                    pos = 2;
+                    if (this.state.playerOneIcon == "alpha-l") {
+                        ico = "a"
+                    }
+                    else if (this.state.playerOneIcon == "checkbox-blank-circle") {
+                        ico = "b"
+                    }
+                    else {
+                        ico = "c"
+                    }
+                }
+                else {
+                    pos = 2;
+                    if (this.state.playerTwoIcon == "alpha-l") {
+                        ico = "a"
+                    }
+                    else if (this.state.playerTwoIcon == "checkbox-blank-circle") {
+                        ico = "b"
+                    }
+                    else {
+                        ico = "c"
+                    }
+                }
+            }
+            else if (num == "02"){
+                if (this.state.currentPlayer == "Uno") {
+                    pos = 3;
+                    if (this.state.playerOneIcon == "alpha-l") {
+                        ico = "a"
+                    }
+                    else if (this.state.playerOneIcon == "checkbox-blank-circle") {
+                        ico = "b"
+                    }
+                    else {
+                        ico = "c"
+                    }
+                }
+                else {
+                    pos = 3;
+                    if (this.state.playerTwoIcon == "alpha-l") {
+                        ico = "a"
+                    }
+                    else if (this.state.playerTwoIcon == "checkbox-blank-circle") {
+                        ico = "b"
+                    }
+                    else {
+                        ico = "c"
+                    }
+
+                }
+
+            }
+            else if (num=="10") {
+                if (this.state.currentPlayer == "Uno") {
+                    pos = 4;
+                    if (this.state.playerOneIcon == "alpha-l") {
+                        ico = "a"
+                    }
+                    else if (this.state.playerOneIcon == "checkbox-blank-circle") {
+                        ico = "b"
+                    }
+                    else {
+                        ico = "c"
+                    }
+                }
+                else {
+                    pos = 4;
+                    if (this.state.playerTwoIcon == "alpha-l") {
+                        ico = "a"
+                    }
+                    else if (this.state.playerTwoIcon == "checkbox-blank-circle") {
+                        ico = "b"
+                    }
+                    else {
+                        ico = "c"
+                    }
+
+                }
+
+            }
+            else if (num =="11"){
+                if (this.state.currentPlayer == "Uno") {
+                    pos = 5;
+                    if (this.state.playerOneIcon == "alpha-l") {
+                        ico = "a"
+                    }
+                    else if (this.state.playerOneIcon == "checkbox-blank-circle") {
+                        ico = "b"
+                    }
+                    else {
+                        ico = "c"
+                    }
+                }
+                else {
+                    pos = 5;
+                    if (this.state.playerTwoIcon == "alpha-l") {
+                        ico = "a"
+                    }
+                    else if (this.state.playerTwoIcon == "checkbox-blank-circle") {
+                        ico = "b"
+                    }
+                    else {
+                        ico = "c"
+                    }
+
+                }
+
+            }
+            else if (num =="12") {
+                if (this.state.currentPlayer == "Uno") {
+                    pos = 6;
+                    if (this.state.playerOneIcon == "alpha-l") {
+                        ico = "a"
+                    }
+                    else if (this.state.playerOneIcon == "checkbox-blank-circle") {
+                        ico = "b"
+                    }
+                    else {
+                        ico = "c"
+                    }
+                }
+                else {
+                    pos = 6;
+                    if (this.state.playerTwoIcon == "alpha-l") {
+                        ico = "a"
+                    }
+                    else if (this.state.playerTwoIcon == "checkbox-blank-circle") {
+                        ico = "b"
+                    }
+                    else {
+                        ico = "c"
+                    }
+
+                }
+
+            }
+            else if (num=="20") {
+                if (this.state.currentPlayer == "Uno") {
+                    pos = 7;
+                    if (this.state.playerOneIcon == "alpha-l") {
+                        ico = "a"
+                    }
+                    else if (this.state.playerOneIcon == "checkbox-blank-circle") {
+                        ico = "b"
+                    }
+                    else {
+                        ico = "c"
+                    }
+                }
+                else {
+                    pos = 7;
+                    if (this.state.playerTwoIcon == "alpha-l") {
+                        ico = "a"
+                    }
+                    else if (this.state.playerTwoIcon == "checkbox-blank-circle") {
+                        ico = "b"
+                    }
+                    else {
+                        ico = "c"
+                    }
+
+                }
+
+            }
+            else if(num=="21") {
+                if (this.state.currentPlayer == "Uno") {
+                    pos = 8;
+                    if (this.state.playerOneIcon == "alpha-l") {
+                        ico = "a"
+                    }
+                    else if (this.state.playerOneIcon == "checkbox-blank-circle") {
+                        ico = "b"
+                    }
+                    else {
+                        ico = "c"
+                    }
+                }
+                else {
+                    pos = 8;
+                    if (this.state.playerTwoIcon == "alpha-l") {
+                        ico = "a"
+                    }
+                    else if (this.state.playerTwoIcon == "checkbox-blank-circle") {
+                        ico = "b"
+                    }
+                    else {
+                        ico = "c"
+                    }
+                }
+
+            }
+            else if (num== "22") {
+                if (this.state.currentPlayer == "Uno") {
+                    pos = 9;
+                    if (this.state.playerOneIcon == "alpha-l") {
+                        ico = "a"
+                    }
+                    else if (this.state.playerOneIcon == "checkbox-blank-circle") {
+                        ico = "b"
+                    }
+                    else {
+                        ico = "c"
+                    }
+                }
+                else {
+                    pos = 9;
+                    if (this.state.playerTwoIcon == "alpha-l") {
+                        ico = "a"
+                    }
+                    else if (this.state.playerTwoIcon == "checkbox-blank-circle") {
+                        ico = "b"
+                    }
+                    else {
+                        ico = "c"
+                    }
+                }
+            }
+            msg = "value:"+pos+ico;
+            Alert.alert(msg)
+        
+            let formdata = new FormData();
+            formdata.append(value, msg)
+            fetch('http://192.168.100.156:9016/api/move', {
+                method: 'POST',
+                headers : {
+                    Accept: '/',
+                    'Content-Type': 'multipart/form-data',
+                }, body: formdata
+            })
         }
     }
-
+    
     renderIcon = (row, col) => {
         let value = this.state.gameState[row][col];
         switch(value)
         {
             case "Uno": return <Icon name = {this.state.playerOneIcon} style={styles.playerOne}/>
-            case "Dos": return <Icon name="circle-outline" style={styles.playerTwo} />
+            case "Dos": return <Icon name={this.state.playerTwoIcon} style={styles.playerTwo} />
             default: return <View/>
         }
     }
+    _onRestartPress = () =>{
+        Alert.alert("Remember to change the paper for the new game")
+        this.initializeGame();
+    }
     
     render() {
+        
         return (
             
             <View style={styles.container}>
@@ -152,7 +424,11 @@ export default class App extends React.Component {
                         {this.renderIcon(2, 2)}
                     </TouchableOpacity>
                 </View>
+                <TouchableOpacity style={styles.Button} onPress={()=>this._onRestartPress()}>
+                    <Text style={styles.buttonText}>Restart the game!</Text>
+                </TouchableOpacity>
             </View>
+
         );
     }
 }
@@ -190,5 +466,19 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: 'center',
-    }
+    },
+    Button: {
+        alignSelf: 'stretch',
+        backgroundColor: 'black',
+        marginVertical: 60,
+        paddingHorizontal: 130,
+        paddingTop: 8,
+       //paddingVertical: 15,
+    },
+    buttonText: {
+        color: 'white',
+        fontFamily: 'Roboto',
+        fontSize: 18,
+        textAlign: 'center',
+    }, 
 });
