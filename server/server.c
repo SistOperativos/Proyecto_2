@@ -1,3 +1,9 @@
+/*
+ *Based of a server retrieved from: https://dzone.com/articles/web-server-c
+ * On: 30/8/19
+ *
+ */
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -116,7 +122,7 @@ int connection(int fd)
             read(fd, string, 512);
             printf("%s", string);
             char* value;
-            if(strstr(string, "value=1a") != NULL){
+            if(strstr(string, "value:1a") != NULL){
                 value = "1a";
                 request_response(fd, 0);
                 printf("\n %s \n", value);
@@ -269,21 +275,24 @@ int main(int argc, char *argv[]) {
     int sockfd, newsockfd, portno, pid;
     socklen_t clilen;
     struct sockaddr_in serv_addr, cli_addr;
+    /*
     if (argc < 2) {
         fprintf(stderr, "ERROR, no port provided\n");
         exit(1);
     }
+    */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0)
         error("ERROR opening socket");
     bzero((char *) &serv_addr, sizeof(serv_addr));
-    portno = atoi(argv[1]);
+    portno =  9016;//atoi(argv[1]);
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = INADDR_ANY;
     serv_addr.sin_port = htons(portno);
     if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
         error("ERROR on binding");
     listen(sockfd, 5);
+    printf("Server running in port %d", portno);
     clilen = sizeof(cli_addr);
     /*
     Server runs forever, forking off a separate
